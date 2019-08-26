@@ -72,6 +72,7 @@ function draw() {
   ground.velocityX = -(6 + 3 * score / 100);  
   
   if(keyDown("space"&& trex.y >= 159)){
+    jumpSound.play();
     trex.velocityY = -12;
   }
   
@@ -158,10 +159,31 @@ function spawnObstacles() {
       default: break;
     }
     
+    
+    
     //assign scale and lifetime to the obstacle           
     obstacle.scale = 0.5;
     obstacle.lifetime = 300;
     //add each obstacle to the group
     obstaclesGroup.add(obstacle);
+    
   }
+  
+  
 }
+
+function reset(){
+  gameState = PLAY;
+  gameOver.visible = false;
+  restart.visible = false;
+  obstaclesGroup.destroyEach();
+  cloudsGroup.destroyEach();
+  trex.changeAnimation("running", trex_running);
+  if(localStorage["highestScore"] < score){
+  localStorage["highestScore"] = score;
+  }
+  console.log(localStorage["highestScore"]);
+  score = 0;
+}
+
+  
